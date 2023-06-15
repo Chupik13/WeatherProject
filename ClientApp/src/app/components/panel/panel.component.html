@@ -1,0 +1,17 @@
+<div class="config-panel">
+  <nz-space>
+    <nz-select (ngModelChange)="onDateChange()" *nzSpaceItem [(ngModel)]="mode">
+      <nz-option nzLabel="Месяц" nzValue="month"></nz-option>
+      <nz-option nzLabel="Год" nzValue="year"></nz-option>
+    </nz-select>
+    <nz-date-picker (ngModelChange)="onDateChange()" *nzSpaceItem [(ngModel)]="dateValue"
+                    [nzMode]="mode"></nz-date-picker>
+  </nz-space>
+  <button (nzOnConfirm)="clearWeatherArchive()"
+          nz-button
+          nz-popconfirm
+          nzDanger
+          nzPopconfirmPlacement="bottom"
+          nzPopconfirmTitle="Очистить все записи?"
+          nzShape="circle" nzType="primary"><span nz-icon nzType="delete"></span></button>
+</div>

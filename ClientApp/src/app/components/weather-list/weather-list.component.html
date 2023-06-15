@@ -1,0 +1,78 @@
+<div (dragleave)="handleDragLeave($event)"
+     (dragover)="handleDragOver($event)"
+     class="main-container">
+  <div (dragleave)="handleUselesDragLeave($event)"
+       (dragover)="handleDragOver($event)"
+       class="table-container">
+    <nz-table
+      (nzQueryParams)="onPageIndexChange($event)"
+      [nzData]="listOfWeatherData"
+      [nzFrontPagination]="false"
+      [nzLoading]="loading"
+      [nzPageIndex]="pageIndex"
+      [nzPageSize]="pageSize"
+      [nzTotal]="total"
+      nzShowSizeChanger>
+      <div (dragleave)="handleDragLeave($event)"
+           (dragover)="handleUselesDragOver($event)"
+           (drop)="handleDragLeave($event)"
+           class="upload-overlay">
+        <nz-upload
+          (nzChange)="handleChange($event)"
+          [class.hidden]="!isDragOver"
+          [nzBeforeUpload]="beforeUpload"
+          [nzMultiple]="true"
+          nzAction="{{sendWeatherArchiveUrl}}"
+          nzType="drag">
+          <p class="ant-upload-drag-icon">
+            <span nz-icon nzType="inbox"></span>
+          </p>
+          <p class="ant-upload-text">Перетащите файлы в эту область для загрузки</p>
+          <p class="ant-upload-hint">
+            Поддерживается и одиночная и множественная загрузка.
+          </p>
+        </nz-upload>
+      </div>
+      <thead>
+      <tr>
+        <th nzColumnKey="date">Дата</th>
+        <th nzColumnKey="time">Время</th>
+        <th nzColumnKey="temp">Температура</th>
+        <th nzColumnKey="humidity">Влажность</th>
+        <th nzColumnKey="dewPoint">Td</th>
+        <th nzColumnKey="pressure">Атм. давл. мм. рт. ст.</th>
+        <th nzColumnKey="windDirections">Направление ветра</th>
+        <th nzColumnKey="windSpeed">Скорость ветра</th>
+        <th nzColumnKey="cloudCoverPercentage">Облачность</th>
+        <th nzColumnKey="cloudBase">h</th>
+        <th nzColumnKey="visibility">VV</th>
+        <th nzColumnKey="weatherType">Погодные явления</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of listOfWeatherData">
+        <td>{{ data.date }}</td>
+        <td>{{ data.time }}</td>
+        <td>{{ data.temperature }}</td>
+        <td>{{ data.humidity }}</td>
+        <td>{{ data.dewPoint }}</td>
+        <td>{{ data.pressure }}</td>
+        <td>{{ windDirectionFormat(data.windDirections) }}</td>
+        <td>{{ data.windSpeed }}</td>
+        <td>{{ data.cloudCoverPercentage }}</td>
+        <td>{{ data.cloudBase }}</td>
+        <td>{{ data.visibility }}</td>
+        <td>{{ data.weatherType }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+<ng-template #customTpl let-name>
+  <div style="text-align: center;">
+    <nz-empty nzNotFoundImage="simple"></nz-empty>
+    <p style="color: #B5B5B5;">
+      Для загрузки файлов перетащите их в область таблицы
+    </p>
+  </div>
+</ng-template>

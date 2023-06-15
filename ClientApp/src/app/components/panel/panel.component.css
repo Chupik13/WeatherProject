@@ -1,0 +1,10 @@
+.config-panel {
+  display: flex;
+  justify-content: end;
+  gap: 20px;
+}
+
+nz-select {
+  margin: 0 8px 10px 0;
+  width: 90px;
+}
